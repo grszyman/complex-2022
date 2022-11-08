@@ -29,7 +29,7 @@ pgClient.on('connect', (client) => {
 const redis = require('redis')
 const redisClient = redis.createClient({
     host: keys.redisHost,
-    port: keys.pgPort,
+    port: keys.redisPort,
     retry_strategy: () => 1000
 })
 const redisPublisher = redisClient.duplicate()
@@ -53,8 +53,8 @@ app.get('/values/current', async (req, res) => {
 app.post('/values/', async (req, res) => {
     const index = req.body.index;
 
-    if (parseInt(index) < 40) {
-        return res.status(433)
+    if (parseInt(index) > 40) {
+        return res.status(422)
             .send('Index too high')
     }
 
