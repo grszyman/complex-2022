@@ -80,8 +80,8 @@ jobs:
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
           aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
-          application_name: complex-2022
-          environment_name: Complex2022-env
+          application_name: test-2
+          environment_name: Test2-env
           existing_bucket_name: elasticbeanstalk-us-east-2-840579016403
           region: us-east-2
           version_label: ${{ github.sha }}
