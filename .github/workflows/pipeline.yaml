@@ -43,25 +43,25 @@ jobs:
         run: docker build -t grszyman/complex-client -t grszyman/complex-client:${{ steps.vars.outputs.short_sha }} ./client
 
       - name: Push client
-        run: docker push grszyman/complex-client
+        run: docker push -a grszyman/complex-client
 
       - name: Build nginx
         run: docker build -t grszyman/complex-nginx -t grszyman/complex-nginx:${{ steps.vars.outputs.short_sha }} ./nginx
 
       - name: Push nginx
-        run: docker push grszyman/complex-nginx
+        run: docker push -a grszyman/complex-nginx
 
       - name: Build api
-        run: docker build -t grszyman/complex-api -t grszyman/complex-api${{ steps.vars.outputs.short_sha }} ./api
+        run: docker build -t grszyman/complex-api -t grszyman/complex-api:${{ steps.vars.outputs.short_sha }} ./api
 
       - name: Push api
-        run: docker push grszyman/complex-api
+        run: docker push -a grszyman/complex-api
 
       - name: Build worker
         run: docker build -t grszyman/complex-worker -t grszyman/complex-worker:${{ steps.vars.outputs.short_sha }} ./worker
 
       - name: Push worker
-        run: docker push grszyman/complex-worker
+        run: docker push -a grszyman/complex-worker
 
     outputs:
       short_sha: ${{ steps.vars.outputs.short_sha }}
