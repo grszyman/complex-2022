@@ -36,9 +36,8 @@ jobs:
 
       - name: Set short git commit SHA
         id: vars
-        run: |
-          calculatedSha=$(git rev-parse --short ${{ github.sha }})
-          echo "::set-output name=short_sha::$calculatedSha"
+        run:
+          echo "short_sha=$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_OUTPUT
 
       - name: Build client
         run: docker build -t grszyman/complex-client -t grszyman/complex-client:${{ steps.vars.outputs.short_sha }} ./client
@@ -63,6 +62,9 @@ jobs:
 
       - name: Push worker
         run: docker push grszyman/complex-worker
+
+    outputs:
+      short_sha: ${{ steps.vars.outputs.short_sha }}
 
   deploy:
     runs-on: ubuntu-latest
@@ -90,5 +92,5 @@ jobs:
           environment_name: Test2-env
           existing_bucket_name: elasticbeanstalk-us-east-2-840579016403
           region: us-east-2
-          version_label: ${{ steps.vars.outputs.short_sha }}
+          version_label: ${{ needs.publish.outputs.short_sha }}
           deployment_package: deploy.zip
